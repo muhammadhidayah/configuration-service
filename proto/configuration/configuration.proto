@@ -1,0 +1,68 @@
+syntax = "proto3";
+
+package configuration;
+
+service ConfigurationService {
+    rpc GetConfigurationClient(RequestConfigCient) returns (ResponseConfigClient) {}
+    rpc GetConfigurationClientBySubs(RequestConfigCient) returns (ResponseConfigClient) {}
+    rpc AddConfigurationClient(RequestConfigCient) returns (ResponseConfigClient) {}
+    rpc UpdateConfigurationClientBySubs(RequestConfigCient) returns (ResponseConfigClient) {}
+    rpc DeleteConfigurationClientBySubs(RequestConfigCient) returns (ResponseConfigClient) {}
+
+    rpc AddConfigurationGlobal(RequestConfigGlobal) returns (ResponseConfigGlobal) {}
+    rpc UpdateConfigurationGlobal(RequestConfigGlobal) returns (ResponseConfigGlobal) {}
+    rpc DeleteConfiguration(RequestConfigGlobal) returns (ResponseConfigGlobal) {}
+    rpc GetConfigurationGlobal(RequestConfigGlobal) returns (ResponseConfigGlobal) {}
+    rpc GetConfigurationGlobalByID(RequestConfigGlobal) returns (ResponseConfigGlobal) {}
+    rpc GetConfigurationGlobalActive(RequestConfigGlobal) returns (ResponseConfigGlobal) {}
+    rpc SetConfigurationGlobalActive(RequestConfigGlobal) returns(ResponseConfigGlobal) {}
+}
+
+message ConfigurationStatus {
+    bool created = 1;
+    bool updated = 2;
+    bool deleted = 3;
+}
+
+message ConfigurationClient {
+    int64 config_client_id = 1;
+    string config_client_uuid = 2;
+    int32 multiple_language_id = 3;
+    string appname = 4;
+    string report_title = 5;
+    string company_subs_id = 6;
+    int32 is_config_deleted = 7;    
+}
+
+message RequestConfigCient {
+    ConfigurationClient configclient = 1;
+}
+
+message ResponseConfigClient {
+    ConfigurationStatus status = 1;
+    ConfigurationClient configclient = 2;
+    repeated ConfigurationClient configclients = 3;
+}
+
+message ConfigurationGlobal {
+    int32 config_global_id = 1;
+    string footertext = 2;
+    string server_smpt = 3;
+    bool ssl = 4;
+    int64 port = 5;
+    bool is_auth = 6;
+    string username = 7;
+    string password = 8;
+    bool is_active = 9;
+}
+
+message RequestConfigGlobal {
+    ConfigurationGlobal configglobal = 1;
+}
+
+message ResponseConfigGlobal {
+    ConfigurationStatus configstatus = 1;
+    ConfigurationGlobal configglobal = 2;
+    repeated ConfigurationGlobal configglobals = 3;
+}
+
